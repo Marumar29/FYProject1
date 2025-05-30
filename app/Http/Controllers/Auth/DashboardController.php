@@ -45,4 +45,10 @@ class DashboardController extends Controller
 
         return view('admin-view-reports', compact('organization', 'reports'));
     }
+
+        public function index()
+    {
+        // Return your dashboard view here
+        return view('org-dashboard'); // Adjust the view name if necessary
+    }
 }

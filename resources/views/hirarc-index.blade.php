@@ -1,28 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ $organization->org_name }} - Reports</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HIRARC Reports</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container mt-4">
-        <h3>{{ $organization->org_name }} - HIRARC Reports</h3>
-        <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary my-3">← Back to Dashboard</a>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container">
+            <span class="navbar-brand text-white">OSHeM Web Portal - HIRARC Reports</span>
+            <form method="POST" action="{{ route('logout-org') }}">
+                @csrf
+                <button type="submit" class="btn btn-light btn-sm">Logout</button>
+            </form>
+        </div>
+    </nav>
 
-        @if ($reports->count() > 0)
-            <table class="table table-bordered">
-                <thead class="table-light">
+    <div class="container mt-4">
+        <h2>HIRARC Reports</h2>
+
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        <a href="{{ route('hirarc.create') }}" class="btn btn-primary mb-3">Create New Report</a>
+
+        @if($reports->isEmpty())
+            <p>No reports found.</p>
+        @else
+            <table class="table table-bordered table-striped">
+                <thead>
                     <tr>
-                        <th>Activity</th>
+                        <th>Task</th>
                         <th>Hazard</th>
-                        <th>Risk</th>
                         <th>Likelihood</th>
                         <th>Severity</th>
-                        <th>Risk Rating</th>
-                        <th>Controls</th>
-                        <th>Created At</th>
+                        <th>Risk Rating (RPN)</th>
+                        <th>Significant</th>
+                        <th>Control Measure</th>
+                        <th>Remarks</th>
+                        <th>Prepared By</th>
+                        <th>Reviewed By</th>
+                        <th>Approved By</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,9 +75,11 @@
 
                 </tbody>
             </table>
-        @else
-            <div class="alert alert-info">No HIRARC reports submitted by this organization yet.</div>
         @endif
+
+        <a href="{{ route('org.dashboard') }}" class="btn btn-secondary mt-3">Back to Dashboard</a>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

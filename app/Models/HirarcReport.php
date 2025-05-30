@@ -9,28 +9,19 @@ class HirarcReport extends Model
 {
     use HasFactory;
 
+    protected $table = 'hirarc_reports';
+
     protected $fillable = [
+        'prepared_by_position', 'prepared_date',
+        'reviewed_by_position', 'reviewed_date',
+        'approved_by_position', 'approved_date',
         'organization_id',
-        'task',
-        'hazard',
-        'risk',
-        'likelihood',
-        'severity',
-        'risk_rating',
-        'control_measure',
-        'prepared_by_name',
-        'prepared_by_position',
-        'prepared_date',
-        'reviewed_by_name',
-        'reviewed_by_position',
-        'reviewed_date',
-        'approved_by_name',
-        'approved_by_position',
-        'approved_date',
+        // Add signature paths here if you store them in this table
+        'signature_prepared', 'signature_reviewed', 'signature_approved'
     ];
 
-    public function organization()
+    public function hazardEntries()
     {
-        return $this->belongsTo(Organization::class);
+        return $this->hasMany(HazardEntry::class, 'hirarc_report_id');
     }
 }

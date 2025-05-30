@@ -30,9 +30,9 @@ class LoginController extends Controller
             $user = Organization::where('email', $email)->first();
             if ($user && Hash::check($password, $user->password)) {
                 session([
-                    'user_id' => $user->id,
+                    'org_id' => $user->id,
                     'user_role' => 'organization',
-                    'user_name' => $user->name,
+                    'org_name' => $user->name,
                 ]);
                 return redirect()->route('org.dashboard');
             }

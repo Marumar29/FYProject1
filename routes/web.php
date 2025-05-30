@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\OrgAuthController;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\DashboardController;
 use App\Http\Controllers\HirarcController;
+use App\Models\HazardEntry;
+
 
 // Homepage
 Route::get('/', function () {
@@ -34,12 +36,28 @@ Route::get('/org/dashboard', function () {
     return view('org-dashboard');
 })->name('org.dashboard');
 
-Route::middleware(['web'])->group(function () {
-    Route::get('/org/hirarc/create', [HirarcController::class, 'create'])->name('hirarc.create');
-    Route::post('/org/hirarc/store', [HirarcController::class, 'store'])->name('hirarc.store');
-});
+
 
 Route::middleware(['admin.auth'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('/admin/organization/{id}/reports', [DashboardController::class, 'viewReports'])->name('admin.viewReports');
 });
+
+
+Route::prefix('admin/hirarc')->middleware('admin')->group(function () {
+    Route::get('/', [HirarcAdminController::class, 'index'])->name('admin.hirarc.index');
+    Route::get('/{reportId}', [HirarcAdminController::class, 'show'])->name('admin.hirarc.show');
+});
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+Route::middleware(['org.auth'])->prefix('org/hirarc')->group(function () {
+    Route::get('/', [HirarcController::class, 'index'])->name('hirarc.index');
+    Route::get('/create', [HirarcController::class, 'create'])->name('hirarc.create');
+    Route::post('/', [HirarcController::class, 'store'])->name('hirarc.store');
+    Route::get('/{id}/edit', [HirarcController::class, 'edit'])->name('hirarc.edit');
+    Route::put('/{id}', [HirarcController::class, 'update'])->name('hirarc.update');
+    Route::delete('/{id}', [HirarcController::class, 'destroy'])->name('hirarc.destroy');
+});
+
