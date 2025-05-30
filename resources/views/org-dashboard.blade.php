@@ -75,7 +75,7 @@
 
     <div class="container mt-4">
         <h2>Welcome, {{ session('org_name') }}</h2>
-        <p>Select an <strong>Assessment Cloud System</strong> module below:</p>
+        <p>Select an <strong>Risk Assessment Cloud System</strong> module below:</p>
 
         <div class="list-group">
             <div class="dropdown">

@@ -10,8 +10,8 @@
 <body class="bg-light d-flex justify-content-center align-items-center vh-100">
 
     <div class="text-center bg-white p-5 rounded shadow" style="max-width: 400px; width: 100%;">
-        <h1 class="mb-4">Welcome to OSHeM Portal</h1>
-        <p class="mb-4">Please click login to continue</p>
+        <h1 class="mb-4">OSHeM Web Portal(HIRARC Risk Assessment)</h1>
+        <p class="mb-4">Click Login/Register to Continue</p>
         <!-- Login Button triggers modal -->
         <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">
             Login / Register

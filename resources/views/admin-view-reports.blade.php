@@ -55,7 +55,7 @@
                 </tbody>
             </table>
         @else
-            <div class="alert alert-info">No HIRARC reports submitted by this organization yet.</div>
+            <div class="alert alert-info">No Reports has been submitted by this organization yet.</div>
         @endif
     </div>
 </body>
