@@ -1,3 +1,6 @@
+@extends('layouts.adminapp')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +21,7 @@
 
         <form method="GET" action="{{ route('admin.dashboard') }}" class="mb-4">
             <div class="row g-2 align-items-end">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="org_type" class="form-label">Filter by Organization Type:</label>
                     <select name="org_type" id="org_type" class="form-select">
                         <option value="">All</option>
@@ -31,6 +34,22 @@
                         <option value="Other" {{ request('org_type') == 'Other' ? 'selected' : '' }}>Other</option>
                     </select>
                 </div>
+
+                <div class="col-md-3">
+                    <label for="module_type" class="form-label">Filter by Module:</label>
+                    <select name="module_type" id="module_type" class="form-select">
+                        <option value="">All Modules</option>
+                        <option value="hirarc" {{ request('module_type') == 'hirarc' ? 'selected' : '' }}>HIRARC</option>
+                        <option value="chra" {{ request('module_type') == 'chra' ? 'selected' : '' }}>CHRA</option>
+                        <option value="nra" {{ request('module_type') == 'nra' ? 'selected' : '' }}>NRA</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="search" class="form-label">Search by Org Name / Reg. No:</label>
+                    <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-control" placeholder="Enter search term" />
+                </div>
+
                 <div class="col-md-auto">
                     <button type="submit" class="btn btn-primary">Apply Filter</button>
                 </div>
@@ -50,22 +69,29 @@
                 </thead>
                 <tbody>
                     @foreach ($organizations as $org)
-                        <tr>
-                            <td>{{ $org->org_name }}</td>
-                            <td>{{ $org->email }}</td>
-                            <td>{{ $org->registration_number }}</td>
-                            <td>{{ $org->org_type }}</td>
-                            <td>
-                                <a href="{{ route('admin.viewReports', $org->id) }}" class="btn btn-sm btn-outline-primary">View Reports</a>
-                                {{-- You can route this to a detailed module view page --}}
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>{{ $org->org_name }}</td>
+                        <td>{{ $org->org_email }}</td>
+                        <!-- Add this inside the row -->
+                        <td>
+                            <form action="{{ route('admin.viewReports', ['id' => $org->id]) }}" method="GET" class="d-flex">
+                                <select name="module" class="form-select form-select-sm me-2">
+                                    <option value="hirarc">HIRARC</option>
+                                    <option value="chra">CHRA</option>
+                                    <option value="nra">NRA</option>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-outline-primary">View Reports</button>
+                            </form>
+                        </td>
+                    </tr>
                     @endforeach
+
                 </tbody>
             </table>
         @else
-            <div class="alert alert-info">No organizations found for the selected type.</div>
+            <div class="alert alert-info">No organizations found for the selected criteria.</div>
         @endif
     </div>
 </body>
 </html>
+@endsection

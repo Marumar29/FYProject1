@@ -38,17 +38,63 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function viewReports($id)
+    public function viewReports(Request $request, $id)
     {
-        $organization = Organization::findOrFail($id);
-        $reports = HirarcReport::where('organization_id', $organization->id)->get();
+        $module = $request->query('module', 'hirarc'); // default to HIRARC
 
-        return view('admin-view-reports', compact('organization', 'reports'));
+        // Just dummy org name for now
+        $organization = (object)[
+            'id' => $id,
+            'org_name' => 'Dummy Organization'
+        ];
+
+        if ($module === 'chra') {
+            $reports = collect([
+                (object)[
+                    'chemical_name' => 'Acetone',
+                    'cas_no' => '67-64-1',
+                    'usage_description' => 'Used for cleaning',
+                    'risk_level' => 'High',
+                    'recommendations' => 'Use in well-ventilated area'
+                ],
+            ]);
+        } elseif ($module === 'nra') {
+            $reports = collect([
+                (object)[
+                    'noise_source' => 'Compressor',
+                    'exposure_level' => '95 dB',
+                    'duration' => '3 hours/day',
+                    'risk_rating' => 'High',
+                    'controls' => 'Use hearing protection'
+                ],
+            ]);
+        } else {
+            $reports = collect([
+                (object)[
+                    'prepared_by_position' => 'Safety Officer',
+                    'prepared_date' => '2024-06-01',
+                    'reviewed_by_position' => 'Manager',
+                    'reviewed_date' => '2024-06-02',
+                    'approved_by_position' => 'Director',
+                    'approved_date' => '2024-06-03',
+                    'hazardEntries' => [
+                        (object)[
+                            'task' => 'Welding',
+                            'hazard' => 'Fumes',
+                            'likelihood' => '3',
+                            'severity' => '4',
+                            'risk' => '12',
+                            'significant' => 'Yes',
+                            'control' => 'Use mask',
+                            'remarks' => 'Ensure ventilation'
+                        ]
+                    ]
+                ]
+            ]);
+        }
+
+        return view('admin-view-reports', compact('organization', 'reports', 'module'));
     }
 
-        public function index()
-    {
-        // Return your dashboard view here
-        return view('org-dashboard'); // Adjust the view name if necessary
-    }
+
 }

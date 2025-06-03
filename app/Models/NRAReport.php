@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class HirarcGroup extends Model
+class NRAReport extends Model
 {
-    use HasFactory;
+    protected $table = 'nra_reports'; // adjust to your actual table name
 }

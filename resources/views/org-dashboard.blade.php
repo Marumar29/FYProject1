@@ -1,9 +1,12 @@
+@extends('layouts.app')
+
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Organization Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <style>
         /* Show dropdown menu on hover */
@@ -62,17 +65,8 @@
         }
     </style>
 </head>
-<body>
-    <nav class="navbar navbar-dark bg-primary">
-        <div class="container">
-            <span class="navbar-brand text-white">OSHeM Web Portal</span>
-            <form method="POST" action="{{ route('logout-org') }}">
-                @csrf
-                <button type="submit" class="btn btn-light btn-sm">Logout</button>
-            </form>
-        </div>
-    </nav>
 
+<body>
     <div class="container mt-4">
         <h2>Welcome, {{ session('org_name') }}</h2>
         <p>Select an <strong>Risk Assessment Cloud System</strong> module below:</p>
@@ -81,24 +75,24 @@
             <div class="dropdown">
                 <a href="#" class="module-bar">📋 Hazard Identification, Risk Assessment, and Risk Control (HIRARC)</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ route('hirarc.create') }}">HIRARC Form Create</a></li>
-                    <li><a class="dropdown-item" href="{{ route('hirarc.index') }}">HIRARC Form View</a></li>
+                    <li><a class="dropdown-item" href="{{ route('hirarc_dummy.form') }}">HIRARC Create Form</a></li>
+                    <li><a class="dropdown-item" href="{{ route('hirarc_dummy.list') }}">HIRARC Report List</a></li>
                 </ul>
             </div>
 
             <div class="dropdown">
                 <a href="#" class="module-bar">🧪 Chemical Health Risk Assessment (CHRA)</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ route('hirarc.create') }}">CHRA Form Create</a></li>
-                    <li><a class="dropdown-item" href="{{ route('hirarc.index') }}">CHRA Form View</a></li>
+                    <li><a class="dropdown-item" href="{{ route('chra_dummy.form') }}">CHRA Create Form</a></li>
+                    <li><a class="dropdown-item" href="{{ route('chra_dummy.list') }}">CHRA Report List</a></li>
                 </ul>
             </div>
 
             <div class="dropdown">
                 <a href="#" class="module-bar">📊 Noise Risk Assessment (NRA)</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ route('hirarc.create') }}">NRA Form Create</a></li>
-                    <li><a class="dropdown-item" href="{{ route('hirarc.index') }}">NRA Form View</a></li>
+                    <li><a class="dropdown-item" href="{{ route('nra_dummy.form') }}">NRA Form Create</a></li>
+                    <li><a class="dropdown-item" href="{{ route('nra_dummy.list') }}">NRA Form View</a></li>
                 </ul>
             </div>     
         </div>
@@ -106,3 +100,4 @@
 
 </body>
 </html>
+@endsection
